@@ -66,7 +66,7 @@ resource "aws_security_group" "dev_allow_web" {
     from_port = 443
     to_port = 443
     protocol = "tcp"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -74,7 +74,7 @@ resource "aws_security_group" "dev_allow_web" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
@@ -82,7 +82,14 @@ resource "aws_security_group" "dev_allow_web" {
     from_port = 2
     to_port = 2
     protocol = "tcp"
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -105,11 +112,12 @@ resource "aws_eip" "dev_eip" {
 }
 
 resource "aws_instance" "dev_web_server_instance" {
-  ami = ""
+  ami = "ami-024e6efaf93d85776"
   instance_type = "t2.micro"
   availability_zone = "us-east-1a"
   key_name = "main-key"
-  network_interface = {
+
+  network_interface {
     device_index = 0
     network_interface_id = aws_network_interface.web_server_nic.id
   }
