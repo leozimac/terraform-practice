@@ -58,7 +58,7 @@ resource "aws_route_table_association" "dev_rta" {
 
 resource "aws_security_group" "dev_allow_web" {
   name = "allow_web_traffic"
-  description = ""
+  description = "Allow web inboud traffic"
   vpc_id = aws_vpc.dev_vpc.id
 
   ingress {
@@ -79,8 +79,8 @@ resource "aws_security_group" "dev_allow_web" {
 
   ingress {
     description = "SSH"
-    from_port = 2
-    to_port = 2
+    from_port = 22
+    to_port = 22
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -112,7 +112,7 @@ resource "aws_eip" "dev_eip" {
 }
 
 resource "aws_instance" "dev_web_server_instance" {
-  ami = "ami-024e6efaf93d85776"
+  ami = "ami-053b0d53c279acc90"
   instance_type = "t2.micro"
   availability_zone = "us-east-1a"
   key_name = "main-key"
